@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.eldarja.eshop.R;
 import com.eldarja.eshop.data.KategorijaVM;
@@ -25,24 +26,42 @@ public class KategorijeListFragment extends Fragment {
 
     private ListView listKategorije;
     private Button btnKategorija;
+    private List<KategorijaVM> kategorije;
+
+
+    public static KategorijeListFragment newInstance() {
+        KategorijeListFragment frag = new KategorijeListFragment();
+        Bundle args = new Bundle();
+        // add params and set bundle to frag
+        frag.setArguments(args);
+        return frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null ){
+            // get params
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.kategorija_list_fragment, container, false);
 
-        final List<KategorijaVM> kategorije = Storage.getKategorije();
+        kategorije = Storage.getKategorije();
 
         listKategorije = view.findViewById(R.id.listKorpaStavke);
         listKategorije.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
-                return 0;
+                return kategorije.size();
             }
 
             @Override
             public Object getItem(int position) {
-                return kategorije.size();
+                return null;
             }
 
             @Override
@@ -58,6 +77,10 @@ public class KategorijeListFragment extends Fragment {
                     view = inflater.inflate(R.layout.kategorija_list_stavka, parent, false);
                 }
 
+                TextView txtKategorijaStavka = view.findViewById(R.id.txtKategorijaStavka);
+                txtKategorijaStavka.setText(kategorije.get(position).getNaziv());
+
+                Log.i("TAGX", kategorije.get(position).getNaziv());
 
                 return view;
             }
@@ -67,7 +90,7 @@ public class KategorijeListFragment extends Fragment {
         btnKategorija.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("TAG", "KOOK");
+                Log.i("TAGX", "KOOK");
             }
         });
         return view;
