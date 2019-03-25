@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.eldarja.eshop.data.Storage;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KategorijaChooseItemsFragment extends DialogFragment {
@@ -29,9 +31,13 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
     private static final String KATEGORIJA_ARG_KEY = "KATEGORIJA";
     private KategorijaVM kategorijaVM;
     private List<ItemVM> listItemi;
+    private List<ItemVM> initialListItemi;
     private TextView txtKategorijaNaziv;
     private ListView listKategorijaItems;
     private Button btnKategorijaSave;
+    private Button btnPretraga;
+    private EditText txtPretraga;
+    private BaseAdapter kategorijaItemsAdapter;
 
     public static KategorijaChooseItemsFragment newInstance(KategorijaVM kategorijaVM) {
         KategorijaChooseItemsFragment kategorijaChooseItemsFragment = new KategorijaChooseItemsFragment();
@@ -58,16 +64,22 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(R.layout.kategorija_choose_items, container, false);
 
-        listItemi = Storage.getItemi();
+        initialListItemi = listItemi = Storage.getItemi();
 
         txtKategorijaNaziv = view.findViewById(R.id.txtkategorijaNaziv);
         txtKategorijaNaziv.setText(kategorijaVM.getNaziv());
 
-        EditText txtPretraga = view.findViewById(R.id.txtPretragaItems);
-        Button btnPretraga = view.findViewById(R.id.btnPretraga);
+        txtPretraga = view.findViewById(R.id.txtPretragaItems);
+        btnPretraga = view.findViewById(R.id.btnPretraga);
+        btnPretraga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                do_btnPretraga();
+            }
+        });
 
         listKategorijaItems = view.findViewById(R.id.listKategorijaChooseItems);
-        listKategorijaItems.setAdapter(new BaseAdapter() {
+        kategorijaItemsAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return listItemi.size();
@@ -94,7 +106,8 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
 
                 return convertView;
             }
-        });
+        };
+        listKategorijaItems.setAdapter(kategorijaItemsAdapter);
 
         btnKategorijaSave = view.findViewById(R.id.btnKategorijaNewSave);
         btnKategorijaSave.setOnClickListener(new View.OnClickListener() {
@@ -104,5 +117,19 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
             }
         });
         return view;
+    }
+
+    private void do_btnPretraga() {
+        String pretragaStr = txtPretraga.getText().toString();
+        if (!pretragaStr.isEmpty()) {
+            List<ItemVM> filtered = new ArrayList<>();
+            for (ItemVM i:initialListItemi) {
+                if (i.getItemNaziv().toLowerCase().contains(txtPretraga.getText().toString().toLowerCase())){
+                    filtered.add(i);
+                }
+            }
+            listItemi = filtered;
+            kategorijaItemsAdapter.notifyDataSetChanged();
+        }
     }
 }
