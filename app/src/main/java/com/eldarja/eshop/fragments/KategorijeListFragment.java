@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.eldarja.eshop.R;
 import com.eldarja.eshop.data.KategorijaVM;
 import com.eldarja.eshop.data.Storage;
+import com.eldarja.eshop.helpers.MyFragmentHelper;
 
 import java.util.List;
 
@@ -53,6 +55,19 @@ public class KategorijeListFragment extends Fragment {
         kategorije = Storage.getKategorije();
 
         listKategorije = view.findViewById(R.id.listKorpaStavke);
+        bindKategorijeList();
+
+        btnKategorija = view.findViewById(R.id.btnKorpa);
+        btnKategorija.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyFragmentHelper.displayFragment((AppCompatActivity) getActivity(), R.id.fragmentContainer, KategorijaAddFragment.newInstance());
+            }
+        });
+        return view;
+    }
+
+    private void bindKategorijeList() {
         listKategorije.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -85,14 +100,5 @@ public class KategorijeListFragment extends Fragment {
                 return view;
             }
         });
-
-        btnKategorija = view.findViewById(R.id.btnKorpa);
-        btnKategorija.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("TAGX", "KOOK");
-            }
-        });
-        return view;
     }
 }
