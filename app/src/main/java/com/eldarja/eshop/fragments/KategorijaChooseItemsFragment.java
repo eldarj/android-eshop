@@ -61,7 +61,7 @@ public class KategorijaChooseItemsFragment extends Fragment {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView != null) {
+                if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.kategorija_choose_items_stavka, parent, false);
                 }
 

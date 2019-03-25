@@ -11,6 +11,7 @@ public class Storage {
 
     public static List<ItemVM> getItemi() {
         if (itemi == null) {
+            itemi = new ArrayList<>();
             itemi.add(new ItemVM("Sony TV 45''", getKategorije()));
             itemi.add(new ItemVM("Asus K550JX", getKategorije()));
         }
