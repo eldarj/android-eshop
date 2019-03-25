@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.eldarja.eshop.R;
@@ -35,8 +36,7 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
     private TextView txtKategorijaNaziv;
     private ListView listKategorijaItems;
     private Button btnKategorijaSave;
-    private Button btnPretraga;
-    private EditText txtPretraga;
+    private SearchView searchPretraga;
     private BaseAdapter kategorijaItemsAdapter;
 
     public static KategorijaChooseItemsFragment newInstance(KategorijaVM kategorijaVM) {
@@ -69,12 +69,17 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
         txtKategorijaNaziv = view.findViewById(R.id.txtkategorijaNaziv);
         txtKategorijaNaziv.setText(kategorijaVM.getNaziv());
 
-        txtPretraga = view.findViewById(R.id.txtPretragaItems);
-        btnPretraga = view.findViewById(R.id.btnPretraga);
-        btnPretraga.setOnClickListener(new View.OnClickListener() {
+        searchPretraga = view.findViewById(R.id.txtPretragaItems);
+        searchPretraga.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                do_btnPretraga();
+            public boolean onQueryTextSubmit(String s) {
+                do_filterPretraga(s);
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                do_filterPretraga(s);
+                return false;
             }
         });
 
@@ -119,12 +124,11 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
         return view;
     }
 
-    private void do_btnPretraga() {
-        String pretragaStr = txtPretraga.getText().toString();
-        if (!pretragaStr.isEmpty()) {
+    private void do_filterPretraga(String s) {
+        if (!s.isEmpty()) {
             List<ItemVM> filtered = new ArrayList<>();
             for (ItemVM i:initialListItemi) {
-                if (i.getItemNaziv().toLowerCase().contains(txtPretraga.getText().toString().toLowerCase())){
+                if (i.getItemNaziv().toLowerCase().contains(s.toLowerCase())){
                     filtered.add(i);
                 }
             }
