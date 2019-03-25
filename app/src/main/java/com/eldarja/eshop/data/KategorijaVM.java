@@ -1,6 +1,8 @@
 package com.eldarja.eshop.data;
 
-public class KategorijaVM {
+import java.io.Serializable;
+
+public class KategorijaVM implements Serializable {
     public Integer id;
     public String naziv;
 
