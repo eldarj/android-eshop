@@ -6,14 +6,15 @@
 
     <ListView
         android:layout_weight="1"
-        android:id="@+id/listKorpaStavke"
+        android:id="@+id/listKategorijaChooseItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 
     <Button
-        android:id="@+id/btnNovaKategorija"
-        android:text="Nova kategorija"
-        android:layout_width="match_parent"
+        android:layout_gravity="right"
+        android:text="Završi"
+        android:id="@+id/btnKategorijaNewSave"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

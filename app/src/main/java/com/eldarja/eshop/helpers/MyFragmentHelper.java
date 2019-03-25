@@ -15,6 +15,7 @@ public class MyFragmentHelper {
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
 
         fragmentTransaction.replace(placeholderId, kategorijeListFragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }

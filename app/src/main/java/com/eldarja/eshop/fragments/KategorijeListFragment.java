@@ -57,7 +57,7 @@ public class KategorijeListFragment extends Fragment {
         listKategorije = view.findViewById(R.id.listKorpaStavke);
         bindKategorijeList();
 
-        btnKategorija = view.findViewById(R.id.btnKorpa);
+        btnKategorija = view.findViewById(R.id.btnNovaKategorija);
         btnKategorija.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
