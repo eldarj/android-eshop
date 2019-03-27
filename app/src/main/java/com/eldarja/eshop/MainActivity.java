@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyFragmentHelper.displayFragment(this, R.id.fragmentContainer, new KategorijeListFragment());
+        MyFragmentHelper.displayFragment(this, R.id.fragmentContainer, KategorijeListFragment.newInstance());
     }
 }

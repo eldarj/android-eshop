@@ -4,15 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -21,8 +18,6 @@ import com.eldarja.eshop.R;
 import com.eldarja.eshop.data.ItemVM;
 import com.eldarja.eshop.data.KategorijaVM;
 import com.eldarja.eshop.data.Storage;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +57,7 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.kategorija_choose_items, container, false);
+        View view = getLayoutInflater().inflate(R.layout.kategorija_choose_items_fragment, container, false);
 
         initialListItemi = listItemi = Storage.getItemi();
 

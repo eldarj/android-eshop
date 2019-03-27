@@ -1,13 +1,16 @@
 package com.eldarja.eshop.data;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class KategorijaVM implements Serializable {
-    public Integer id;
+    public int id;
     public String naziv;
+    public static int idCounter = 0;
 
     public KategorijaVM(String naziv) {
         this.naziv = naziv;
+        id = idCounter++;
     }
 
     public Integer getId() {
@@ -24,5 +27,9 @@ public class KategorijaVM implements Serializable {
 
     public void setNaziv(String naziv) {
         this.naziv = naziv;
+    }
+
+    public List<ItemVM> getItems() {
+        return Storage.getItemi(this);
     }
 }
