@@ -23,21 +23,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KategorijaAddItemsFragment extends DialogFragment {
+    private static final String KATEGORIJA_ARG_KEY = "KATEGORIJA_NAZIV";
 
-    private static final String KATEGORIJA_ARG_KEY = "KATEGORIJA";
-    private KategorijaVM kategorijaVM;
+    private String kategorijaNaziv;
+
     private List<ItemVM> listItemi;
     private List<ItemVM> initialListItemi;
+
     private TextView txtKategorijaNaziv;
     private ListView listKategorijaItems;
     private Button btnKategorijaSave;
     private SearchView searchPretraga;
+
     private BaseAdapter kategorijaItemsAdapter;
 
-    public static KategorijaAddItemsFragment newInstance(KategorijaVM kategorijaVM) {
+    public static KategorijaAddItemsFragment newInstance(String katNaziv) {
         KategorijaAddItemsFragment kategorijaChooseItemsFragment = new KategorijaAddItemsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(KATEGORIJA_ARG_KEY, kategorijaVM);
+        args.putString(KATEGORIJA_ARG_KEY, katNaziv);
         kategorijaChooseItemsFragment.setArguments(args);
 
         return kategorijaChooseItemsFragment;
@@ -48,9 +51,8 @@ public class KategorijaAddItemsFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null && getArguments().containsKey(KATEGORIJA_ARG_KEY)) {
-            kategorijaVM =(KategorijaVM)getArguments().getSerializable(KATEGORIJA_ARG_KEY);
+            kategorijaNaziv = getArguments().getString(KATEGORIJA_ARG_KEY, "Kategorija");
         }
-
         setStyle(STYLE_NORMAL, R.style.DialogTheme);
     }
 
@@ -62,7 +64,7 @@ public class KategorijaAddItemsFragment extends DialogFragment {
         initialListItemi = listItemi = Storage.getItemi();
 
         txtKategorijaNaziv = view.findViewById(R.id.txtkategorijaNaziv);
-        txtKategorijaNaziv.setText(kategorijaVM.getNaziv());
+        txtKategorijaNaziv.setText(kategorijaNaziv);
 
         searchPretraga = view.findViewById(R.id.txtPretragaItems);
         searchPretraga.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -14,11 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eldarja.eshop.R;
 import com.eldarja.eshop.data.KategorijaVM;
 import com.eldarja.eshop.data.Storage;
 import com.eldarja.eshop.helpers.MyFragmentHelper;
+import com.eldarja.eshop.helpers.MyRunnable;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class KategorijeListFragment extends Fragment {
     private ListView listKategorije;
     private Button btnKategorija;
     private List<KategorijaVM> kategorije;
+    private BaseAdapter adapterKategorije;
 
 
     public static KategorijeListFragment newInstance() {
@@ -67,16 +70,27 @@ public class KategorijeListFragment extends Fragment {
         btnKategorija.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyFragmentHelper.displayFragment((AppCompatActivity) getActivity(),
-                        R.id.fragmentContainer,
-                        KategorijaCreateNewFragment.newInstance());
+                do_btnAddNewClick();
             }
         });
         return view;
     }
 
+    private void do_btnAddNewClick() {
+        MyRunnable<KategorijaVM> callback = new MyRunnable<KategorijaVM>() {
+            @Override
+            public void run(KategorijaVM result) {
+                adapterKategorije.notifyDataSetChanged();
+                Toast.makeText(getActivity(), "Uspješno ste snimili novu kategoriju " + result.getNaziv(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        MyFragmentHelper.displayDialog((AppCompatActivity) getActivity(),
+                "CREATE_NEW_CAT_DIALOG",
+                KategorijaCreateNewFragment.newInstance(callback));
+    }
+
     private void bindKategorijeList() {
-        listKategorije.setAdapter(new BaseAdapter() {
+        adapterKategorije = new BaseAdapter() {
             @Override
             public int getCount() {
                 return kategorije.size();
@@ -107,6 +121,7 @@ public class KategorijeListFragment extends Fragment {
 
                 return view;
             }
-        });
+        };
+        listKategorije.setAdapter(adapterKategorije);
     }
 }
