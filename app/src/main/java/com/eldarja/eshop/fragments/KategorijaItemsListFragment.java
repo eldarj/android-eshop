@@ -45,6 +45,9 @@ public class KategorijaItemsListFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(R.layout.kategorija_items_list_fragment, container, false);
 
+        TextView txtKategorijaParentNaziv = view.findViewById(R.id.txtKategorijaParentNaziv);
+        txtKategorijaParentNaziv.setText(kategorijaVM.getNaziv());
+
         items = kategorijaVM.getItems();
         ListView katItems = view.findViewById(R.id.listKategorijaItems);
         katItems.setAdapter(new BaseAdapter() {

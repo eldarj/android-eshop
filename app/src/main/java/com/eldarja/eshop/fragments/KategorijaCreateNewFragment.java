@@ -16,14 +16,13 @@ import com.eldarja.eshop.R;
 import com.eldarja.eshop.data.KategorijaVM;
 import com.eldarja.eshop.helpers.MyFragmentHelper;
 
-public class KategorijaAddFragment extends Fragment {
+public class KategorijaCreateNewFragment extends Fragment {
 
     private EditText txtKategorijaNaziv;
-    private EditText txtKategorijaOpis;
     private Button btnDodajIteme;
 
-    public static KategorijaAddFragment newInstance() {
-        return new KategorijaAddFragment();
+    public static KategorijaCreateNewFragment newInstance() {
+        return new KategorijaCreateNewFragment();
     }
 
     @Nullable
@@ -32,7 +31,6 @@ public class KategorijaAddFragment extends Fragment {
         View view = inflater.inflate(R.layout.kategorija_add_fragment, container, false);
 
         txtKategorijaNaziv = view.findViewById(R.id.txtKategorijaNewNaziv);
-        txtKategorijaOpis = view.findViewById(R.id.txtKategorijaNewOpis);
 
         btnDodajIteme = view.findViewById(R.id.btnDodajIteme);
         btnDodajIteme.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +47,7 @@ public class KategorijaAddFragment extends Fragment {
             KategorijaVM nova = new KategorijaVM(txtKategorijaNaziv.getText().toString());
             MyFragmentHelper.displayDialog((AppCompatActivity) getActivity(),
                     "KATEGORIJA_CHOOSE_ITEMS_DLG",
-                    KategorijaChooseItemsFragment.newInstance(nova));
+                    KategorijaAddItemsFragment.newInstance(nova));
         } else {
             Toast.makeText(getActivity(), "Polje Naziv je neophodno!", Toast.LENGTH_LONG).show();
         }

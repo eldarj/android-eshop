@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="Itemi"
+        android:id="@+id/txtKategorijaParentNaziv"
         android:padding="10dp"
         android:textStyle="bold"
         android:layout_width="match_parent"

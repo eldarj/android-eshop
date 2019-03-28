@@ -22,7 +22,7 @@ import com.eldarja.eshop.data.Storage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KategorijaChooseItemsFragment extends DialogFragment {
+public class KategorijaAddItemsFragment extends DialogFragment {
 
     private static final String KATEGORIJA_ARG_KEY = "KATEGORIJA";
     private KategorijaVM kategorijaVM;
@@ -34,8 +34,8 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
     private SearchView searchPretraga;
     private BaseAdapter kategorijaItemsAdapter;
 
-    public static KategorijaChooseItemsFragment newInstance(KategorijaVM kategorijaVM) {
-        KategorijaChooseItemsFragment kategorijaChooseItemsFragment = new KategorijaChooseItemsFragment();
+    public static KategorijaAddItemsFragment newInstance(KategorijaVM kategorijaVM) {
+        KategorijaAddItemsFragment kategorijaChooseItemsFragment = new KategorijaAddItemsFragment();
         Bundle args = new Bundle();
         args.putSerializable(KATEGORIJA_ARG_KEY, kategorijaVM);
         kategorijaChooseItemsFragment.setArguments(args);
