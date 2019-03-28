@@ -120,15 +120,13 @@ public class KategorijaChooseItemsFragment extends DialogFragment {
     }
 
     private void do_filterPretraga(String s) {
-        if (!s.isEmpty()) {
-            List<ItemVM> filtered = new ArrayList<>();
-            for (ItemVM i:initialListItemi) {
-                if (i.getItemNaziv().toLowerCase().contains(s.toLowerCase())){
-                    filtered.add(i);
-                }
+        List<ItemVM> filtered = new ArrayList<>();
+        for (ItemVM i:initialListItemi) {
+            if (i.getItemNaziv().toLowerCase().contains(s.toLowerCase())){
+                filtered.add(i);
             }
-            listItemi = filtered;
-            kategorijaItemsAdapter.notifyDataSetChanged();
         }
+        listItemi = filtered;
+        kategorijaItemsAdapter.notifyDataSetChanged();
     }
 }
