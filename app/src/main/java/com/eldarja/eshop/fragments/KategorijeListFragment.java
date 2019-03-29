@@ -3,6 +3,7 @@ package com.eldarja.eshop.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +27,7 @@ import java.util.List;
 public class KategorijeListFragment extends Fragment {
 
     private ListView listKategorije;
-    private Button btnKategorija;
+    private FloatingActionButton btnNovaKategorija;
     private List<KategorijaVM> kategorije;
     private BaseAdapter adapterKategorije;
 
@@ -66,8 +66,8 @@ public class KategorijeListFragment extends Fragment {
             }
         });
 
-        btnKategorija = view.findViewById(R.id.btnNovaKategorija);
-        btnKategorija.setOnClickListener(new View.OnClickListener() {
+        btnNovaKategorija = view.findViewById(R.id.btnNovaKategorija);
+        btnNovaKategorija.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 do_btnAddNewClick();

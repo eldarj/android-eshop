@@ -1,19 +1,26 @@
 package com.eldarja.eshop.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eldarja.eshop.R;
 import com.eldarja.eshop.data.ItemVM;
 import com.eldarja.eshop.data.KategorijaVM;
+import com.eldarja.eshop.data.Storage;
 
 import java.util.List;
 
@@ -22,6 +29,7 @@ public class KategorijaItemsListFragment extends DialogFragment {
     private static final String PARENT_KATEGORIJA = "PARENT_KATEGORIJA";
     private KategorijaVM kategorijaVM;
     private List<ItemVM> items;
+    private BaseAdapter itemsAdapter;
 
     public static KategorijaItemsListFragment newInstance(KategorijaVM kat) {
         KategorijaItemsListFragment frag = new KategorijaItemsListFragment();
@@ -50,7 +58,7 @@ public class KategorijaItemsListFragment extends DialogFragment {
 
         items = kategorijaVM.getItems();
         ListView katItems = view.findViewById(R.id.listKategorijaItems);
-        katItems.setAdapter(new BaseAdapter() {
+        itemsAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return items.size();
@@ -77,8 +85,43 @@ public class KategorijaItemsListFragment extends DialogFragment {
 
                 return convertView;
             }
+        };
+        katItems.setAdapter(itemsAdapter);
+
+        katItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("TAGX", "LONGCLICK");
+                do_izbrisiItemLongClick(position, view);
+                return true;
+            }
         });
 
+
         return view;
+    }
+
+    private void do_izbrisiItemLongClick(int position, final View parentView) {
+        final ItemVM itm = items.get(position);
+        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+        adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setTitle("Izbriši item");
+        adb.setMessage("Želite izbrisati item " + itm.getItemNaziv());
+        adb.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        adb.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                kategorijaVM.removeItem(itm);
+                items = kategorijaVM.getItems();
+                itemsAdapter.notifyDataSetChanged();
+                Snackbar.make(parentView, "Uspješno ste izbrisali item!", Snackbar.LENGTH_LONG).show();
+            }
+        });
+        adb.show();
     }
 }

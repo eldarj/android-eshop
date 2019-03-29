@@ -32,4 +32,14 @@ public class KategorijaVM implements Serializable {
     public List<ItemVM> getItems() {
         return Storage.getItemi(this);
     }
+
+    public boolean removeItem(ItemVM item) {
+        for (ItemVM i : getItems()) {
+            if (i.equals(item)) {
+                Storage.itemi.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }
